@@ -1,0 +1,5 @@
+Django==5.2.10
+python-dotenv==1.2.2
+openai==2.30.0
+bleach==6.4.0
+Markdown==3.10.3
