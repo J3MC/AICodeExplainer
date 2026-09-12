@@ -1,0 +1,183 @@
+﻿{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Workspace - AI Code Explainer</title>
+
+    <link rel="stylesheet" href="{% static 'explainer/css/style.css' %}">
+</head>
+
+<body class="app-page">
+    <header class="app-header">
+        <a href="{% url 'home' %}" class="app-brand">
+            <span class="brand-mark">&lt;/&gt;</span>
+            AI Code Explainer
+        </a>
+
+        <nav class="app-nav">
+            <div class="profile-menu">
+                <button class="user-pill" id="profile-toggle" type="button"
+                    aria-expanded="false" aria-controls="profile-dropdown"
+                    title="Open account menu">
+                    {{ request.user.username|slice:":2"|upper }}
+                </button>
+
+                <div class="profile-dropdown" id="profile-dropdown" hidden>
+                    <div class="profile-summary">
+                        <strong>{{ request.user.username }}</strong>
+                        <span>{{ request.user.email }}</span>
+                    </div>
+
+                    <div class="profile-divider"></div>
+
+                    <button class="profile-action theme-toggle" id="theme-toggle" type="button"
+                        aria-pressed="false">
+                        <span>Theme</span>
+                        <span class="theme-toggle-label">Light mode</span>
+                    </button>
+
+                    <a href="{% url 'home' %}#faq">Help &amp; FAQs</a>
+
+                    <div class="profile-divider"></div>
+
+                    <a href="{% url 'explainer' %}">Workspace</a>
+                    <a href="{% url 'history' %}">History</a>
+
+                    {% if request.user.is_staff %}
+                    <a href="{% url 'admin:index' %}">Admin panel</a>
+                    {% endif %}
+
+                    <div class="profile-divider"></div>
+
+                    <form method="post" action="{% url 'delete_account' %}"
+                        onsubmit="return confirm('Permanently delete your account and all saved explanations? This cannot be undone.');">
+                        {% csrf_token %}
+                        <button type="submit" class="profile-delete">
+                            Delete account
+                        </button>
+                    </form>
+
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="profile-logout">Log out</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="app-main">
+        <section class="workspace-intro">
+            <div>
+                <p class="workspace-eyebrow">
+                    AI-POWERED CODE LEARNING
+                </p>
+
+                <h1>Turn code into clarity.</h1>
+
+                <p class="workspace-description">
+                    Paste your code, select its language, and get a simple
+                    explanation that helps you learn faster.
+                </p>
+            </div>
+
+            <div class="status-badge">
+                <span></span>
+                Groq AI online
+            </div>
+        </section>
+
+        <form method="post" class="workspace-grid" id="explainer-form">
+            {% csrf_token %}
+
+            <section class="workspace-card editor-card">
+                <div class="card-header">
+                    <div>
+                        <p class="card-label">INPUT</p>
+                        <h2>Your code</h2>
+                    </div>
+
+                    <span class="card-icon">&lt;/&gt;</span>
+                </div>
+
+                <textarea name="code" id="code-input" class="code-editor" maxlength="12000"
+                    placeholder="Paste your code here...">{{ code }}</textarea>
+
+                <div class="editor-meta">
+                    <span>Maximum 12,000 characters</span>
+                    <span id="code-counter">0 / 12000</span>
+                </div>
+
+                <div class="editor-footer">
+                    <select name="language" class="language-select">
+                        {% for option in language_options %}
+                        <option value="{{ option.value }}" {% if option.selected %}selected{% endif %}>
+                            {{ option.value }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                    <a href="{% url 'explainer' %}" class="secondary-button">
+                        Clear
+                    </a>
+
+                    <button type="submit" class="primary-button" id="explain-button">
+                        Explain code
+                        <span>→</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="workspace-card result-card">
+                <div class="card-header">
+                    <div>
+                        <p class="card-label">AI RESULT</p>
+                        <h2>Explanation</h2>
+                    </div>
+
+                    <span class="result-status">
+                        {% if explanation %}
+                        Ready
+                        {% else %}
+                        Waiting
+                        {% endif %}
+                    </span>
+                </div>
+
+                {% if explanation %}
+                <button type="button" class="copy-button" id="copy-button">
+                    Copy explanation
+                </button>
+                {% endif %}
+
+                <div class="result-content">
+                    {% if explanation %}
+                    {{ explanation|safe }}
+                    {% else %}
+                    <div class="empty-result">
+                        <div class="empty-icon">✦</div>
+
+                        <h3>
+                            Your explanation will appear here
+                        </h3>
+
+                        <p>
+                            Paste a code snippet on the left and click
+                            “Explain code” to get started.
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+        </form>
+    </main>
+
+    <script src="{% static 'explainer/js/app.js' %}"></script>
+</body>
+
+</html>

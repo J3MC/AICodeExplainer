@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up - AI Code Explainer</title>
+    <link rel="stylesheet" href="{% static 'explainer/css/auth.css' %}">
+</head>
+
+<body class="auth-page">
+    <main class="auth-shell">
+        <section class="auth-branding">
+            <div class="auth-logo">AI Code Explainer</div>
+
+            <h1>Understand code without the confusion.</h1>
+
+            <p>
+                Paste code, choose a language, and receive a clear,
+                beginner-friendly explanation powered by AI.
+            </p>
+        </section>
+
+        <section class="auth-card">
+            <h2>Create your account</h2>
+            <p class="auth-subtitle">
+                Start explaining code in seconds.
+            </p>
+
+            {% if form.non_field_errors %}
+            <div class="auth-errors">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+
+                {% for field in form %}
+                {{ field.errors }}
+                {{ field.label_tag }}
+                {{ field }}
+
+                {% if field.help_text %}
+                <small class="field-help">
+                    {{ field.help_text }}
+                </small>
+                {% endif %}
+                {% endfor %}
+
+                <button class="auth-button" type="submit">
+                    Create account
+                </button>
+            </form>
+
+            <p class="auth-footer">
+                Already have an account?
+                <a href="{% url 'login' %}">Log in</a>
+            </p>
+        </section>
+    </main>
+</body>
+
+</html>

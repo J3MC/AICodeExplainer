@@ -1,0 +1,11 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'explainer/css/admin.css' %}">
+{% endblock %}
+
+{% block welcome-msg %}
+    <strong>{{ user.get_username }}</strong>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Saved Explanation - AI Code Explainer</title>
+
+    <link rel="stylesheet" href="{% static 'explainer/css/style.css' %}">
+</head>
+
+<body class="app-page">
+    <header class="app-header">
+        <a href="{% url 'home' %}" class="app-brand">
+            <span class="brand-mark">&lt;/&gt;</span>
+            AI Code Explainer
+        </a>
+
+        <nav class="app-nav">
+            <div class="profile-menu">
+                <button class="user-pill" id="profile-toggle" type="button"
+                    aria-expanded="false" aria-controls="profile-dropdown"
+                    title="Open account menu">
+                    {{ request.user.username|slice:":2"|upper }}
+                </button>
+
+                <div class="profile-dropdown" id="profile-dropdown" hidden>
+                    <div class="profile-summary">
+                        <strong>{{ request.user.username }}</strong>
+                        <span>{{ request.user.email }}</span>
+                    </div>
+
+                    <div class="profile-divider"></div>
+
+                    <button class="profile-action theme-toggle" id="theme-toggle" type="button"
+                        aria-pressed="false">
+                        <span>Theme</span>
+                        <span class="theme-toggle-label">Light mode</span>
+                    </button>
+
+                    <a href="{% url 'home' %}#faq">Help &amp; FAQs</a>
+
+                    <div class="profile-divider"></div>
+
+                    <a href="{% url 'explainer' %}">Workspace</a>
+                    <a href="{% url 'history' %}">History</a>
+
+                    {% if request.user.is_staff %}
+                    <a href="{% url 'admin:index' %}">Admin panel</a>
+                    {% endif %}
+
+                    <div class="profile-divider"></div>
+
+                    <form method="post" action="{% url 'delete_account' %}"
+                        onsubmit="return confirm('Permanently delete your account and all saved explanations? This cannot be undone.');">
+                        {% csrf_token %}
+                        <button type="submit" class="profile-delete">
+                            Delete account
+                        </button>
+                    </form>
+
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="profile-logout">Log out</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="app-main">
+        <a href="{% url 'history' %}" class="secondary-button">
+            ← Back to history
+        </a>
+
+        <section class="workspace-card detail-card">
+            <p class="workspace-eyebrow">
+                {{ explanation.language }}
+            </p>
+
+            <h1>Saved explanation</h1>
+
+            <pre class="saved-code"><code>{{ explanation.code }}</code></pre>
+
+            <div class="result-content">
+                {{ explanation.explanation|safe }}
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'explainer/js/app.js' %}"></script>
+</body>
+
+</html>

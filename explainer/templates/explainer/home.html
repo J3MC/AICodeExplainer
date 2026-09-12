@@ -1,0 +1,337 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Code Explainer</title>
+
+    <link rel="stylesheet" href="{% static 'explainer/css/landing.css' %}">
+</head>
+
+<body class="landing-page">
+    <header class="landing-header">
+        <a href="{% url 'home' %}" class="landing-brand">
+            <span class="brand-symbol">&lt;/&gt;</span>
+            <span>AI Code Explainer</span>
+        </a>
+
+        <nav class="landing-nav">
+            <a href="#features">Features</a>
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'explainer' %}">
+                Workspace
+            </a>
+
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="nav-logout" type="submit">
+                    Log out
+                </button>
+            </form>
+            {% else %}
+            <a href="{% url 'login' %}">
+                Log in
+            </a>
+
+            <a href="{% url 'signup' %}" class="nav-signup">
+                Sign up
+            </a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        <section class="landing-hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span></span>
+                    AI-powered learning for developers
+                </div>
+
+                <h1>
+                    Understand code.
+                    <span>Build with confidence.</span>
+                </h1>
+
+                <p>
+                    Paste any code and get a clear, beginner-friendly
+                    explanation in seconds.
+                </p>
+
+                <div class="hero-actions">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'explainer' %}" class="hero-primary">
+                        Open workspace
+                        <span>→</span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'signup' %}" class="hero-primary">
+                        Start explaining for free
+                        <span>→</span>
+                    </a>
+
+                    <a href="{% url 'login' %}" class="hero-secondary">
+                        Log in
+                    </a>
+                    {% endif %}
+                </div>
+
+                <p class="hero-note">
+                    No complicated setup. Just paste, select, and understand.
+                </p>
+            </div>
+
+            <div class="preview-window">
+                <div class="preview-topbar">
+                    <div class="preview-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <span>ai-code-explainer</span>
+                </div>
+
+                <div class="preview-body">
+                    <div class="preview-code">
+                        <div class="preview-label">YOUR CODE</div>
+
+                        <code>
+                            <span class="code-purple">def</span>
+                            <span class="code-blue">greet</span>
+                            <span class="code-white">(name):</span><br>
+                            &nbsp;&nbsp;
+                            <span class="code-purple">return</span>
+                            <span class="code-green">
+                                f"Hello, {name}!"
+                            </span>
+                        </code>
+                    </div>
+
+                    <div class="preview-divider"></div>
+
+                    <div class="preview-result">
+                        <div class="preview-label">AI EXPLANATION</div>
+
+                        <h3>This function creates a greeting</h3>
+
+                        <p>
+                            It accepts a name and returns a personalized
+                            message using a formatted string.
+                        </p>
+
+                        <div class="preview-check">
+                            <span>✓</span>
+                            Beginner-friendly explanation
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="feature-section" id="features">
+            <div class="section-heading">
+                <p>HOW IT WORKS</p>
+                <h2>From confusing code to clear understanding.</h2>
+            </div>
+
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <div class="feature-number">01</div>
+
+                    <div class="feature-visual visual-editor" aria-hidden="true">
+                        <div class="mini-window-bar">
+                            <span></span><span></span><span></span>
+                        </div>
+
+                        <pre class="mini-code-demo"><code><span class="demo-purple">def</span> <span class="demo-blue">greet</span>(name):
+    <span class="demo-purple">return</span> <span class="demo-green">f"Hello, {name}!"</span></code></pre>
+                    </div>
+
+                    <div class="feature-copy">
+                        <h3>Paste your code</h3>
+                        <p>
+                            Add a code snippet from any project or tutorial.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-number">02</div>
+
+                    <div class="feature-visual visual-language" aria-hidden="true">
+                        <div class="mini-select">
+                            <span class="language-display">
+                                <span>Text</span>
+                                <span>Python</span>
+                                <span>JavaScript</span>
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>C</span>
+                                <span>C++</span>
+                                <span>Java</span>
+                            </span>
+                            <span class="mini-chevron">⌄</span>
+                        </div>
+
+                        <div class="language-chips">
+                            <span>Text</span>
+                            <span>Python</span>
+                            <span>JavaScript</span>
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>C</span>
+                            <span>C++</span>
+                            <span>Java</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-copy">
+                        <h3>Choose a language</h3>
+                        <p>
+                            Select Text, Python, JavaScript, HTML, CSS, C,
+                            C++, or Java.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-number">03</div>
+
+                    <div class="feature-visual visual-result" aria-hidden="true">
+                        <div class="mini-result-heading">
+                            <span class="mini-spark">✦</span>
+                            Explanation ready
+                        </div>
+
+                        <div class="mini-explanation-demo">
+                            This function creates a greeting message using
+                            the name provided by the user.
+                        </div>
+
+                        <div class="mini-result-check">✓ Beginner-friendly</div>
+                    </div>
+
+                    <div class="feature-copy">
+                        <h3>Learn faster</h3>
+                        <p>
+                            Get a structured explanation with important details
+                            and improvement ideas.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="faq-section" id="faq">
+            <div class="faq-intro">
+                <p class="section-kicker">HELP &amp; FAQS</p>
+                <h2>Questions, answered.</h2>
+                <p>
+                    Everything you need to know about turning unfamiliar code
+                    into something you understand.
+                </p>
+            </div>
+
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>What can I use AI Code Explainer for?</summary>
+                    <p>
+                        Paste a code snippet, choose its language, and get a
+                        clear explanation of what it does and how to improve it.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Which languages are supported?</summary>
+                    <p>
+                        Text, Python, JavaScript, HTML, CSS, C, C++, and Java
+                        are currently supported.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Is AI Code Explainer free to use?</summary>
+                    <p>
+                        Yes. The current version is free for users. If usage
+                        limits or paid plans are introduced in the future,
+                        they will be clearly explained before you use them.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Where are my previous explanations?</summary>
+                    <p>
+                        Open your profile menu and choose History. Your saved
+                        explanations are private to your account.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>How do I get the best explanation?</summary>
+                    <p>
+                        Paste a focused snippet, select the correct language,
+                        and include a little context when the code depends on
+                        another function or file.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Is my code saved?</summary>
+                    <p>
+                        Explanations are saved to your private history so you
+                        can revisit them later. You can delete individual items
+                        or clear your full history at any time.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Can I explain plain text too?</summary>
+                    <p>
+                        Yes. Choose Text from the workspace dropdown to get an
+                        explanation of the meaning, structure, tone, and key
+                        ideas in a passage.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>How much content can I submit?</summary>
+                    <p>
+                        Each request supports up to 12,000 characters. For the
+                        clearest result, focus on one snippet or section at a
+                        time.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Does the app run my code?</summary>
+                    <p>
+                        No. AI Code Explainer analyzes the text you provide;
+                        it does not execute your submitted code inside the app.
+                    </p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>What if an explanation is not quite right?</summary>
+                    <p>
+                        AI explanations are learning aids, so review important
+                        details and test code safely in your own environment.
+                        Adding more context usually improves the result.
+                    </p>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <footer class="landing-footer">
+        <span>AI Code Explainer</span>
+        <span>Built for curious developers.</span>
+    </footer>
+</body>
+
+</html>
