@@ -63,3 +63,13 @@ GitHub Actions runs `manage.py check` and the full test suite automatically on e
 ## Security note
 
 Never commit `.env`, API keys, `db.sqlite3`, or the virtual environment. These files are excluded by `.gitignore`.
+
+## Screenshots
+
+### Home page
+
+![AI Code Explainer home page](./home.png)
+
+### Workspace
+
+![AI Code Explainer workspace](./workspace.png)
