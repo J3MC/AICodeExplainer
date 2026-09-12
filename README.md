@@ -68,8 +68,10 @@ Never commit `.env`, API keys, `db.sqlite3`, or the virtual environment. These f
 
 ### Home page
 
-![AI Code Explainer home page](./Screenshots/Home.png)
+<img width="1917" height="1078" alt="Home png" src="https://github.com/user-attachments/assets/bbae57d8-22f8-40c6-b4c2-1f4dfdb43deb" />
+
 
 ### Workspace
 
-![AI Code Explainer workspace](./Screenshots/Workspace.png)
+<img width="1917" height="1078" alt="Workspace png" src="https://github.com/user-attachments/assets/ac3a16b7-91e8-4fdd-82da-c03ffcf74c2b" />
+
